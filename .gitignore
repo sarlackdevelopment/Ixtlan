@@ -1,1 +1,11 @@
-/node_modules/
+# Default
+.gulp
+.idea
+.vscode
+
+# Node
+node_modules
+
+# Dist & test
+test
+dist
