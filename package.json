@@ -1,0 +1,60 @@
+{
+  "name": "main_ixtlan",
+  "version": "1.0.0",
+  "engines": {
+    "node": "10.16.0",
+    "npm": "6.11.3"
+  },
+  "description": "Ixtlan. Norwegian forest cat cattery",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack-dev-server --open 'Google Chrome' --config ./build/webpack.dev.config.js",
+    "build": "webpack --config ./build/webpack.build.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sarlackdevelopment/Ixtlan.git"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "ie >= 9"
+  ],
+  "author": "Alex",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sarlackdevelopment/Ixtlan/issues"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.6.3",
+    "@babel/preset-env": "^7.6.3",
+    "@babel/preset-react": "^7.6.3",
+    "autoprefixer": "^9.6.4",
+    "babel-loader": "^8.0.6",
+    "copy-webpack-plugin": "^5.0.4",
+    "css-loader": "^3.2.0",
+    "css-mqpacker": "^7.0.0",
+    "cssnano": "^4.1.10",
+    "file-loader": "^4.2.0",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.8.0",
+    "node-sass": "^4.12.0",
+    "path": "^0.12.7",
+    "postcss-loader": "^3.0.0",
+    "sass-loader": "^8.0.0",
+    "style-loader": "^1.0.0",
+    "webpack": "^4.41.0",
+    "webpack-cli": "^3.3.9",
+    "webpack-dev-server": "^3.8.2",
+    "webpack-merge": "^4.2.2"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.11.2",
+    "bootstrap": "^4.3.1",
+    "lodash": "^4.17.15",
+    "react": "^16.10.2",
+    "react-app-polyfill": "^1.0.3",
+    "react-bootstrap": "^1.0.0-beta.14",
+    "react-dom": "^16.10.2"
+  }
+}
