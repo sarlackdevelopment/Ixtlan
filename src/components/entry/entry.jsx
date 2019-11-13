@@ -1,11 +1,13 @@
 import React from 'react'
 
-//import Main from '../main'
+import Header from './header'
+import Main from './main'
 
 const Entry = () => {
     return (
         <>
-            Тест 
+            <Header />
+            <Main />
         </>
     )
 }

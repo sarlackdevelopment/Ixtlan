@@ -5,7 +5,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 //import './index.css';
 //import * as serviceWorker from './serviceWorker';
-import Entry from './components/Entry/index.jsx';
+import Entry from './components/entry';
 import './css/main.css'
 import './scss/main.scss'
 
