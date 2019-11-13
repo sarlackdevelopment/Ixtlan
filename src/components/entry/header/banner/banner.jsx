@@ -7,7 +7,7 @@ import Image from 'react-bootstrap/Image'
 
 const Banner = () => {
     return (
-        <Container>
+        <Container as="header">
             <Row className="justify-content-md-center">
                 <Col>
                     <Image src='/assets/img/Caption.png' fluid className="mx-auto d-block" />

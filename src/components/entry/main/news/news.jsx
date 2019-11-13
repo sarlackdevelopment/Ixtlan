@@ -8,10 +8,10 @@ import fetchNews from './fetching'
 
 const News = () => {
     return (
-        <Accordion defaultActiveKey="1">
+        <Accordion defaultActiveKey="1" as="aside">
             <h4 className="text-center align-self-center">Новости</h4>
             {fetchNews().map(({id, title, body}) => (
-                <Card key={id}>
+                <Card key={id} as="article">
                     <Card.Header>
                         <Accordion.Toggle as={Button} className='btn-block' variant="link" eventKey={id}>
                             {title}
