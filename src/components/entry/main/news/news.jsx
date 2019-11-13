@@ -4,6 +4,8 @@ import Accordion from 'react-bootstrap/Accordion'
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 
+import Jumbotron from 'react-bootstrap/Jumbotron'
+
 import fetchNews from './fetching'
 
 const News = () => {
@@ -18,7 +20,9 @@ const News = () => {
                         </Accordion.Toggle>
                     </Card.Header>
                     <Accordion.Collapse eventKey={id}>
-                        <Card.Body>{body}</Card.Body>
+                        <Card.Body as="p" className="shadow-lg m-3 p-4 bg-white rounded">
+                            {body}
+                        </Card.Body>
                     </Accordion.Collapse>
                 </Card>
             ))}
