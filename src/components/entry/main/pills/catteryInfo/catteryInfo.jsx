@@ -4,7 +4,7 @@ import Figure from 'react-bootstrap/Figure'
 
 import { logoSize } from '../utils'
 
-const Cattery_info = () => {
+const CatteryInfo = () => {
     return (
         <Figure>
             <p>
@@ -34,4 +34,4 @@ const Cattery_info = () => {
     )
 }
 
-export default Cattery_info
+export default CatteryInfo

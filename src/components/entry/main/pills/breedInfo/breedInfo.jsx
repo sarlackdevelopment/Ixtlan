@@ -4,7 +4,7 @@ import Figure from 'react-bootstrap/Figure'
 
 import { logoSize } from '../utils'
 
-const Breed_info = () => {
+const BreedInfo = () => {
     return (
         <Figure>
             <p>Доброго времени, гость! Располагайся. Мы из породы <mark>норвежских лесных кошек</mark>.
@@ -42,4 +42,4 @@ const Breed_info = () => {
     )
 }
 
-export default Breed_info
+export default BreedInfo
