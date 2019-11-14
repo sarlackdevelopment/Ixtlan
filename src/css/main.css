@@ -5,6 +5,6 @@ body {
     font-family: 'Comic Sans MS', cursive;
 }
 
-#root {
-    /*color: red;*/
+mark {
+    background-color:  transparent !important;
 }

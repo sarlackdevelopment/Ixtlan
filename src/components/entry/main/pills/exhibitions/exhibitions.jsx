@@ -6,10 +6,14 @@ import Button from 'react-bootstrap/Button'
 
 import fetchNews from './fetching'
 
-const News = () => {
+const Exhibitions = () => {
     return (
-        <Accordion defaultActiveKey="1" as="aside">
-            <h4 className="text-center align-self-center">Новости</h4>
+        <div></div>
+    )
+}
+
+{/*<Accordion defaultActiveKey="1" as="aside">
+            <h4 className="text-center align-self-center"></h4>
             {fetchNews().map(({id, title, body}) => (
                 <Card key={id} as="article">
                     <Card.Header>
@@ -24,8 +28,6 @@ const News = () => {
                     </Accordion.Collapse>
                 </Card>
             ))}
-        </Accordion>
-    )
-}
+            </Accordion>*/}
 
-export default News
+export default Exhibitions
