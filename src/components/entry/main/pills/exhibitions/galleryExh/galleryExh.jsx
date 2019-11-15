@@ -1,7 +1,9 @@
 import React, { useState, useCallback } from "react";
+
 import Gallery from "react-photo-gallery";
 import Carousel, { Modal, ModalGateway } from "react-images";
-import { photos } from "./photos";
+
+import { fetchImg } from "../fetching";
 
 const galleryExh = () => {
 
@@ -18,6 +20,8 @@ const galleryExh = () => {
         setViewerIsOpen(false)
     }
 
+    const photos = fetchImg()
+
     return (
         <>
             <Gallery photos={photos} onClick={openLightbox} />
@@ -26,11 +30,7 @@ const galleryExh = () => {
                     <Modal onClose={closeLightbox}>
                         <Carousel
                             currentIndex={currentImage}
-                            views={photos.map(photo => ({
-                                ...photo,
-                                srcset: photo.srcSet,
-                                caption: photo.title
-                            }))}
+                            views={photos.map(img => ({...img}))}
                         />
                     </Modal>
                 ) : null}

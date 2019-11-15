@@ -8,9 +8,9 @@ import { fetchImg } from '../fetching'
 const carouselExh = () => {
     return (
         <Carousel indicators={false}>
-            {fetchImg().map(({id, path}) => (
+            {fetchImg().map(({id, src}) => (
                 <Carousel.Item key={id}>
-                    <Image src={path} fluid />
+                    <Image src={src} fluid />
                 </Carousel.Item>
             ))}
         </Carousel>
