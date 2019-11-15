@@ -7,6 +7,9 @@ import Container from 'react-bootstrap/Container';
 import CatteryInfo from './catteryInfo'
 import BreedInfo from './breedInfo'
 import Exhibitions from './exhibitions'
+import Video from './video'
+
+import VideoGallery from './videoGallery'
 
 const Pills = () => {
 
@@ -31,7 +34,8 @@ const Pills = () => {
                 </Container>
             </Tab>
             <Tab eventKey="video" title="Видео">
-                {`Видео`}
+                <h3 className="text-center">Видео</h3>
+                <VideoGallery />
             </Tab>
             <Tab eventKey="news" title="Новости">
                 {`Новости`}
