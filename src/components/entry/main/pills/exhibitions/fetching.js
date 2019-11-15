@@ -1,4 +1,4 @@
-const fetchExhibitions = () => {
+export const fetchExhibitions = () => {
     return [
         {
             'id': '1',
@@ -50,4 +50,16 @@ const fetchExhibitions = () => {
 
 }
 
-export default fetchExhibitions
+export const fetchImg = () => {
+    return [
+        {
+            'id': '1',
+            'path': '/assets/img/pumpkin.jpg'
+        },
+        {
+            'id': '2',
+            'path': '/assets/img/Taiga.jpg'
+        }
+    ]
+
+}

@@ -1,4 +1,4 @@
-import React, {dangerouslySetInnerHTML} from 'react'
+import React from 'react'
 
 import Accordion from 'react-bootstrap/Accordion'
 import Card from 'react-bootstrap/Card'
@@ -6,8 +6,9 @@ import Button from 'react-bootstrap/Button'
 import Jumbotron from 'react-bootstrap/Jumbotron'
 
 import CarouselExh from './carouselExh'
+import GalleryExh from './galleryExh'
 
-import fetchExhibitions from './fetching'
+import { fetchExhibitions } from './fetching'
 
 const Exhibitions = () => {
 
@@ -28,6 +29,7 @@ const Exhibitions = () => {
                     <Accordion.Collapse eventKey={id}>
                         <Card.Body as="aside">
                             <CarouselExh />
+                            <GalleryExh />
                             <Jumbotron
                                 className="shadow-lg p-3 mb-5 rounded"
                                 dangerouslySetInnerHTML={createArticleBody(long_description)}

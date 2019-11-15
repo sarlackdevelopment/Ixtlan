@@ -55,6 +55,8 @@
     "react": "^16.10.2",
     "react-app-polyfill": "^1.0.3",
     "react-bootstrap": "^1.0.0-beta.14",
-    "react-dom": "^16.10.2"
+    "react-dom": "^16.10.2",
+    "react-images": "^1.0.0",
+    "react-photo-gallery": "^8.0.0"
   }
 }
