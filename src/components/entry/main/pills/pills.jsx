@@ -7,7 +7,6 @@ import Container from 'react-bootstrap/Container';
 import CatteryInfo from './catteryInfo'
 import BreedInfo from './breedInfo'
 import Exhibitions from './exhibitions'
-import Video from './video'
 
 import VideoGallery from './videoGallery'
 
