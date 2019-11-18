@@ -3,8 +3,10 @@ import React from 'react'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import Card from 'react-bootstrap/Card'
-import Button from 'react-bootstrap/Button'
+//import Card from 'react-bootstrap/Card'
+//import Button from 'react-bootstrap/Button'
+
+import PiceOfNews from './piceOfNews'
 
 import _ from 'lodash'
 
@@ -41,26 +43,58 @@ const NewsGallery = () => {
 
     }
 
-    const renderNews = (block) => { 
-        return (block.map(({dis, id, title, body}) => (
-            <Col key={`col_${id}`} xs={12} md={dis} className="mb-4">  
-                <Card key={id} border="primary" className="h-100">
-                    <Card.Header>{title}</Card.Header>
-                    <Card.Body>
-                        <Card.Text>
-                            {body}
-                            <Button variant="link">подробнее...</Button>
-                        </Card.Text>
-                    </Card.Body>
-                </Card>
-            </Col>)
-        ))
+    /* const splitNewsBody = (body, dis) => {
+
+        let count = 0
+
+        switch (dis) {
+            case 8:
+                count = 60
+                break     
+            default:
+                count = 10
+                break
+        }
+
+        return body.split(' ')
+            .filter((item, idx) => idx <= count)
+            .reduce((text, current) => `${text} ${current}`, '')
+
+    } */
+
+    const renderNews = (block, lastNews) => {
+
+        let count = 0
+        let result = []
+
+        block.map(({dis, id, title, body}, index) => {
+            const evalDis = lastNews && (index == block.length - 1) ? 12 - count : dis
+            result.push(
+                <Col key={`col_${id}`} xs={12} md={evalDis} className="mb-4">
+                    <PiceOfNews dis={dis} id={id} title={title} body={body} />  
+                    {/*<Card key={id} border="primary" className="h-100">
+                        <Card.Header>{title}</Card.Header>
+                        <Card.Body>
+                            <Card.Text>
+                                {splitNewsBody(body, dis)}
+                                <Button variant="link">подробнее...</Button>
+                            </Card.Text>
+                        </Card.Body>
+                    </Card>*/}
+                </Col>
+            )
+            count = count + dis
+        })
+        
+        return result
     }
+
+    const newsList = prepareNewsList()
 
     return (
         <Container>
-            {prepareNewsList().map((item, idx) => (
-                <Row key={idx}>{renderNews(item)}</Row>
+            {newsList.map((item, idx) => (
+                <Row key={idx}>{renderNews(item, idx == newsList.length - 1)}</Row>
             ))}
         </Container>
     )
