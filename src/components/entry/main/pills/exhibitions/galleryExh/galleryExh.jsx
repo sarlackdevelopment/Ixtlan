@@ -1,7 +1,7 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect } from "react"
 
-import Gallery from "react-photo-gallery";
-import Carousel, { Modal, ModalGateway } from "react-images";
+import Gallery from "react-photo-gallery"
+import Carousel, { Modal, ModalGateway } from "react-images"
 
 import axios from 'axios'
 

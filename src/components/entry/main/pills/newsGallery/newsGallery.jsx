@@ -3,6 +3,7 @@ import React, {useState, useEffect} from 'react'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
+import Pagination from 'react-bootstrap/Pagination'
 
 import PiceOfNews from './piceOfNews'
 
@@ -71,6 +72,25 @@ const NewsGallery = () => {
             {newsList.map((item, idx) => (
                 <Row key={idx}>{renderNews(item, idx == newsList.length - 1)}</Row>
             ))}
+
+            <Pagination className="justify-content-center">
+                <Pagination.First />
+                <Pagination.Prev />
+                <Pagination.Item>{1}</Pagination.Item>
+                <Pagination.Ellipsis />
+
+                <Pagination.Item>{10}</Pagination.Item>
+                <Pagination.Item>{11}</Pagination.Item>
+                <Pagination.Item active>{12}</Pagination.Item>
+                <Pagination.Item>{13}</Pagination.Item>
+                <Pagination.Item>{14}</Pagination.Item>
+
+                <Pagination.Ellipsis />
+                <Pagination.Item>{20}</Pagination.Item>
+                <Pagination.Next />
+                <Pagination.Last />
+            </Pagination>
+
         </Container>
     )
         

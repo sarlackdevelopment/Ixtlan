@@ -2,7 +2,7 @@ import React from 'react'
 
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
-import Container from 'react-bootstrap/Container';
+import Container from 'react-bootstrap/Container'
 
 import CatteryInfo from './catteryInfo'
 import BreedInfo from './breedInfo'

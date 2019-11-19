@@ -8,6 +8,7 @@ import { Player } from 'video-react'
 
 import 'video-react/dist/video-react.css'
 
+// TODO: Вынести в утилиты key="Модальное окно"
 const MyVerticallyCenteredModal = props => {
     return (
         <Modal
@@ -28,7 +29,7 @@ const MyVerticallyCenteredModal = props => {
                 <Button onClick={props.onHide}>Закрыть</Button>
             </Modal.Footer>
         </Modal>
-    );
+    )
 }
 
 const Video = ({data}) => {
