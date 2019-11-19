@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 
 import CardDeck from 'react-bootstrap/CardDeck'
 import Form from 'react-bootstrap/Form'
@@ -8,13 +8,19 @@ import Col from 'react-bootstrap/Col'
 import Video from './video'
 
 import _ from 'lodash'
-
-import fetchVideo from './fetching'
+import axios from 'axios'
 
 const VideoGallery = () => {
 
     const [countCol, setCountCol] = useState(2)
-    const data = _.chunk(fetchVideo(), countCol)
+    const [video, setVideo]       = useState([])
+
+    useEffect(() => {
+        axios.get(`http://localhost:8081/assets/stub/video.json`)
+            .then(response => setVideo(response.data.video))
+            .catch(error => console.log(error))
+    }, [])
+    const data = _.chunk(video, countCol)
 
     return (
         <>

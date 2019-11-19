@@ -1,36 +1,39 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-//import Card from 'react-bootstrap/Card'
-//import Button from 'react-bootstrap/Button'
 
 import PiceOfNews from './piceOfNews'
 
 import _ from 'lodash'
-
-import fetchNews from './fetching'
+import axios from 'axios'
 
 const NewsGallery = () => {
+
+    const [news, setNews] = useState([])
+    useEffect(() => {
+        axios.get(`http://localhost:8081/assets/stub/news.json`)
+            .then(response => setNews(response.data.news))
+            .catch(error => console.log(error))
+    }, [])
 
     const dismensions = [[4, 4, 4], [6, 6], [8, 4], [4, 8]]
 
     const prepareNewsList = () => {
 
         let result = []
-        const data = fetchNews()
         
-        while (data.length != 0) {
+        while (news.length != 0) {
     
             let newDismension = []
             const dismension = dismensions[_.random(0, 3)]
     
             dismension.forEach(item => {
-                if (data.length != 0) {
+                if (news.length != 0) {
                     newDismension.push({
                         dis: item,
-                        ...data.shift()
+                        ...news.shift()
                     })
                 }
             })
@@ -43,25 +46,6 @@ const NewsGallery = () => {
 
     }
 
-    /* const splitNewsBody = (body, dis) => {
-
-        let count = 0
-
-        switch (dis) {
-            case 8:
-                count = 60
-                break     
-            default:
-                count = 10
-                break
-        }
-
-        return body.split(' ')
-            .filter((item, idx) => idx <= count)
-            .reduce((text, current) => `${text} ${current}`, '')
-
-    } */
-
     const renderNews = (block, lastNews) => {
 
         let count = 0
@@ -72,15 +56,6 @@ const NewsGallery = () => {
             result.push(
                 <Col key={`col_${id}`} xs={12} md={evalDis} className="mb-4">
                     <PiceOfNews dis={dis} id={id} title={title} body={body} />  
-                    {/*<Card key={id} border="primary" className="h-100">
-                        <Card.Header>{title}</Card.Header>
-                        <Card.Body>
-                            <Card.Text>
-                                {splitNewsBody(body, dis)}
-                                <Button variant="link">подробнее...</Button>
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>*/}
                 </Col>
             )
             count = count + dis
