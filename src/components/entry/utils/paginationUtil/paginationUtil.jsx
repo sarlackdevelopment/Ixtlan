@@ -7,7 +7,10 @@ import axios from 'axios'
 const paginationUtil = () => {
 
   const [quantity, setQuantity] = useState(0)
+  const [currentPage, setCurrentPage] = useState(1)
 
+  // TODO: Это не совсем утилита получается - сделать утилитой и перенести 
+  //       запрос количества в родительский (вызывающий) компонент
   useEffect(() => {
     axios.get(`http://localhost:8081/assets/stub/quantityOfNews.json`)
       .then(response => setQuantity(response.data.quantity))
@@ -33,7 +36,9 @@ const paginationUtil = () => {
       const firstPages = []
       const lastPages  = []
 
-      const quantityOfBorderPages = Math.floor((quantityOfAllPages - 6) / 2)
+      //const quantityOfBorderPages = Math.floor((quantityOfAllPages - 6) / 2)
+
+      const quantityOfBorderPages = 7
 
       for (let index = 1; index <= quantityOfAllPages; index++) {
 
@@ -47,9 +52,11 @@ const paginationUtil = () => {
 
       }
 
-      result.pagesData = pagesData
-      result.firstPages = firstPages
-      result.lastPages = lastPages
+      result.pagesData       = pagesData
+      result.firstPages      = firstPages
+      result.lastPages       = lastPages
+      result.leftBorderPage  = quantityOfBorderPages
+      result.rigthBorderPage = lastPages[0]
 
     }
 
@@ -57,44 +64,83 @@ const paginationUtil = () => {
 
   }
 
+  const getPaginationItem = (itemData, active = false) => {
+    return (active ?
+      <Pagination.Item active>{itemData}</Pagination.Item> :
+      <Pagination.Item onClick={() => setCurrentPage(itemData)}>{itemData}</Pagination.Item>
+    )
+  }
+
   // TODO адаптив
 
   const paginationMounting = () => {
 
-    const currentPage = 11
-
-    const { pagesData, firstPages, lastPages } = paginationData()
+    const { pagesData, firstPages, lastPages, leftBorderPage, rigthBorderPage } = paginationData()
 
     let result = []
     if (pagesData.length <= 9) {
-      pagesData.forEach(item => result.push(<Pagination.Item>{item}</Pagination.Item>))
+      pagesData.forEach(item => result.push(getPaginationItem(item, item === currentPage)))
     } else {
       
       if (firstPages.includes(currentPage)) {
 
-        firstPages.forEach(item => result.push(<Pagination.Item>{item}</Pagination.Item>))
-
-        result.push(<Pagination.Ellipsis />)
-        result.push(<Pagination.Item>{pagesData.length}</Pagination.Item>)
-
-      } else if (lastPages.includes(currentPage)) {
-
-          result.push(<Pagination.Item>{1}</Pagination.Item>)
+        if (currentPage === leftBorderPage) {
+          result.push(getPaginationItem(1))
           result.push(<Pagination.Ellipsis />)
 
-          lastPages.forEach(item => result.push(<Pagination.Item>{item}</Pagination.Item>))
-
-      } else {
-
-          result.push(<Pagination.Item>{1}</Pagination.Item>)
-          result.push(<Pagination.Ellipsis />)
-          
           for (let i = currentPage - 2; i <= currentPage + 2; i++){
-            result.push(<Pagination.Item>{i}</Pagination.Item>)
+            result.push(getPaginationItem(i, i === currentPage))
           }
 
           result.push(<Pagination.Ellipsis />)
-          result.push(<Pagination.Item>{pagesData.length}</Pagination.Item>)
+          result.push(getPaginationItem(pagesData.length))
+        } else {
+
+          firstPages.forEach(item => result.push(getPaginationItem(item, item === currentPage)))
+
+          result.push(<Pagination.Ellipsis />)
+          result.push(getPaginationItem(pagesData.length, pagesData.length === currentPage))
+
+        }
+
+      }
+       
+      if (lastPages.includes(currentPage) ) {
+
+        if (currentPage === rigthBorderPage) {
+
+          result.push(getPaginationItem(1))
+          result.push(<Pagination.Ellipsis />)
+
+          for (let i = currentPage - 2; i <= currentPage + 2; i++){
+            result.push(getPaginationItem(i, i === currentPage))
+          }
+
+          result.push(<Pagination.Ellipsis />)
+          result.push(getPaginationItem(pagesData.length))
+
+        } else {
+
+          result.push(getPaginationItem(1, currentPage === 1))
+          result.push(<Pagination.Ellipsis />)
+
+          lastPages.forEach(item => result.push(getPaginationItem(item, item === currentPage)))
+
+        }
+
+      } 
+      
+      if ((!firstPages.includes(currentPage) && !lastPages.includes(currentPage))) {
+
+          result.push(getPaginationItem(1, currentPage === 1))
+          result.push(<Pagination.Ellipsis />)
+          
+          for (let i = currentPage - 2; i <= currentPage + 2; i++){
+            result.push(getPaginationItem(i, i === currentPage))
+          }
+
+          result.push(<Pagination.Ellipsis />)
+          result.push(getPaginationItem(pagesData.length, pagesData.length === currentPage))
 
       }
     }
