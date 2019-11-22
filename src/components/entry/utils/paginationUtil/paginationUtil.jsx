@@ -33,11 +33,8 @@ const paginationUtil = () => {
 
     } else {
 
-      const firstPages = []
-      const lastPages  = []
-
-      //const quantityOfBorderPages = Math.floor((quantityOfAllPages - 6) / 2)
-
+      const firstPages            = []
+      const lastPages             = []
       const quantityOfBorderPages = 7
 
       for (let index = 1; index <= quantityOfAllPages; index++) {
@@ -71,6 +68,24 @@ const paginationUtil = () => {
     )
   }
 
+  const middleMounting = (countPages) => {
+
+    const result = []
+
+    result.push(getPaginationItem(1, currentPage === 1))
+    result.push(<Pagination.Ellipsis />)
+          
+    for (let i = currentPage - 2; i <= currentPage + 2; i++){
+      result.push(getPaginationItem(i, i === currentPage))
+    }
+
+    result.push(<Pagination.Ellipsis />)
+    result.push(getPaginationItem(countPages, countPages === currentPage))
+
+    return result
+
+  }
+
   // TODO адаптив
 
   const paginationMounting = () => {
@@ -78,22 +93,19 @@ const paginationUtil = () => {
     const { pagesData, firstPages, lastPages, leftBorderPage, rigthBorderPage } = paginationData()
 
     let result = []
+
     if (pagesData.length <= 9) {
+      
       pagesData.forEach(item => result.push(getPaginationItem(item, item === currentPage)))
+      
     } else {
       
       if (firstPages.includes(currentPage)) {
 
         if (currentPage === leftBorderPage) {
-          result.push(getPaginationItem(1))
-          result.push(<Pagination.Ellipsis />)
 
-          for (let i = currentPage - 2; i <= currentPage + 2; i++){
-            result.push(getPaginationItem(i, i === currentPage))
-          }
+          result = middleMounting(pagesData.length)
 
-          result.push(<Pagination.Ellipsis />)
-          result.push(getPaginationItem(pagesData.length))
         } else {
 
           firstPages.forEach(item => result.push(getPaginationItem(item, item === currentPage)))
@@ -109,15 +121,7 @@ const paginationUtil = () => {
 
         if (currentPage === rigthBorderPage) {
 
-          result.push(getPaginationItem(1))
-          result.push(<Pagination.Ellipsis />)
-
-          for (let i = currentPage - 2; i <= currentPage + 2; i++){
-            result.push(getPaginationItem(i, i === currentPage))
-          }
-
-          result.push(<Pagination.Ellipsis />)
-          result.push(getPaginationItem(pagesData.length))
+          result = middleMounting(pagesData.length)
 
         } else {
 
@@ -132,15 +136,7 @@ const paginationUtil = () => {
       
       if ((!firstPages.includes(currentPage) && !lastPages.includes(currentPage))) {
 
-          result.push(getPaginationItem(1, currentPage === 1))
-          result.push(<Pagination.Ellipsis />)
-          
-          for (let i = currentPage - 2; i <= currentPage + 2; i++){
-            result.push(getPaginationItem(i, i === currentPage))
-          }
-
-          result.push(<Pagination.Ellipsis />)
-          result.push(getPaginationItem(pagesData.length, pagesData.length === currentPage))
+          result = middleMounting(pagesData.length)
 
       }
     }
