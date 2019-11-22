@@ -49,6 +49,8 @@ const paginationUtil = () => {
 
       }
 
+      localStorage.setItem('quantityOfAllPages', quantityOfAllPages)
+
       result.pagesData       = pagesData
       result.firstPages      = firstPages
       result.lastPages       = lastPages
@@ -97,7 +99,7 @@ const paginationUtil = () => {
     if (pagesData.length <= 9) {
       
       pagesData.forEach(item => result.push(getPaginationItem(item, item === currentPage)))
-      
+
     } else {
       
       if (firstPages.includes(currentPage)) {
@@ -136,7 +138,7 @@ const paginationUtil = () => {
       
       if ((!firstPages.includes(currentPage) && !lastPages.includes(currentPage))) {
 
-          result = middleMounting(pagesData.length)
+        result = middleMounting(pagesData.length)
 
       }
     }
@@ -145,13 +147,15 @@ const paginationUtil = () => {
 
   }
 
+  const quantityOfAllPages = Number(localStorage.getItem('quantityOfAllPages'))
+
   return (
     <Pagination className="justify-content-center">
-      <Pagination.First />
-      <Pagination.Prev />
+      <Pagination.First onClick = {() => setCurrentPage(1)} />
+      <Pagination.Prev onClick = {() => setCurrentPage(currentPage == 1 ? 1 : currentPage - 1)} />
         {paginationMounting()}
-      <Pagination.Next />
-      <Pagination.Last />
+      <Pagination.Next onClick = {() => setCurrentPage(currentPage == quantityOfAllPages ? quantityOfAllPages : currentPage + 1)} />
+      <Pagination.Last onClick = {() => setCurrentPage(quantityOfAllPages)} />
     </Pagination>)
 }
 
