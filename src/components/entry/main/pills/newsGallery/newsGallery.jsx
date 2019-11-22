@@ -15,26 +15,26 @@ const NewsGallery = () => {
     const [news, setNews] = useState([])
     useEffect(() => {
         axios.get(`http://localhost:8081/assets/stub/news.json`)
-            .then(response => setNews(response.data.news))
+            .then(response => setNews(prepareNewsList(response.data.news)))
             .catch(error => console.log(error))
     }, [])
 
     const dismensions = [[4, 4, 4], [6, 6], [8, 4], [4, 8]]
 
-    const prepareNewsList = () => {
+    const prepareNewsList = (myNews) => {
 
         let result = []
         
-        while (news.length != 0) {
+        while (myNews.length != 0) {
     
             let newDismension = []
             const dismension = dismensions[_.random(0, 3)]
     
             dismension.forEach(item => {
-                if (news.length != 0) {
+                if (myNews.length != 0) {
                     newDismension.push({
                         dis: item,
-                        ...news.shift()
+                        ...myNews.shift()
                     })
                 }
             })
@@ -65,13 +65,9 @@ const NewsGallery = () => {
         return result
     }
 
-    const newsList = prepareNewsList()
-
     return (
         <Container>
-            {newsList.map((item, idx) => (
-                <Row key={idx}>{renderNews(item, idx == newsList.length - 1)}</Row>
-            ))}
+            {news.map((item, idx) => <Row key={idx}>{renderNews(item, idx == news.length - 1)}</Row>)}
             <PaginationUtil />
         </Container>
     )

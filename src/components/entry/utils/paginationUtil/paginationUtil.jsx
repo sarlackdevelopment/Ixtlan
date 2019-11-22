@@ -1,40 +1,88 @@
-import React from 'react'
-//import 'rc-pagination/assets/index.css'
-//import Pagination from 'rc-pagination'
+import React, {useState, useEffect} from 'react'
+
 import Pagination from 'react-bootstrap/Pagination'
+
+import axios from 'axios'
 
 const paginationUtil = () => {
 
-  const currentPage = 7
-  const arr = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21]
-  //const arr = [1,2,3,4,5,6,7,8,9,10]
-  //const arr = [1,2,3,4,5]
+  const [quantity, setQuantity] = useState(0)
 
-  const first = [1,2,3,4,5,6,7]
-  const last = [15,16,17,18,19,20,21]
+  useEffect(() => {
+    axios.get(`http://localhost:8081/assets/stub/quantityOfNews.json`)
+      .then(response => setQuantity(response.data.quantity))
+      .catch(error => console.log(error))
+    }, [])
+
+  const paginationData = () => {
+
+    const result = {}
+    const pagesData = []
+    const quantityOfAllPages = quantity < 8 ? 1 : Math.floor(quantity / 8)
+
+    if (quantityOfAllPages <= 9) {
+
+      for (let index = 1; index <= quantityOfAllPages; index++) {
+        pagesData.push(index)
+      }
+
+      result.pagesData = pagesData
+
+    } else {
+
+      const firstPages = []
+      const lastPages  = []
+
+      const quantityOfBorderPages = Math.floor((quantityOfAllPages - 6) / 2)
+
+      for (let index = 1; index <= quantityOfAllPages; index++) {
+
+        pagesData.push(index)
+
+        if (index <= quantityOfBorderPages) {
+          firstPages.push(index)
+        } else if (quantityOfAllPages - index < quantityOfBorderPages) {
+          lastPages.push(index)
+        }
+
+      }
+
+      result.pagesData = pagesData
+      result.firstPages = firstPages
+      result.lastPages = lastPages
+
+    }
+
+    return result
+
+  }
 
   // TODO адаптив
 
-  const bar = () => {
+  const paginationMounting = () => {
+
+    const currentPage = 11
+
+    const { pagesData, firstPages, lastPages } = paginationData()
 
     let result = []
-    if (arr.length <= 9) {
-      arr.forEach(item => result.push(<Pagination.Item>{item}</Pagination.Item>))
+    if (pagesData.length <= 9) {
+      pagesData.forEach(item => result.push(<Pagination.Item>{item}</Pagination.Item>))
     } else {
       
-      if (first.includes(currentPage)) {
+      if (firstPages.includes(currentPage)) {
 
-        first.forEach(item => result.push(<Pagination.Item>{item}</Pagination.Item>))
+        firstPages.forEach(item => result.push(<Pagination.Item>{item}</Pagination.Item>))
 
         result.push(<Pagination.Ellipsis />)
-        result.push(<Pagination.Item>{arr.length}</Pagination.Item>)
+        result.push(<Pagination.Item>{pagesData.length}</Pagination.Item>)
 
-      } else if (last.includes(currentPage)) {
+      } else if (lastPages.includes(currentPage)) {
 
           result.push(<Pagination.Item>{1}</Pagination.Item>)
           result.push(<Pagination.Ellipsis />)
 
-          last.forEach(item => result.push(<Pagination.Item>{item}</Pagination.Item>))
+          lastPages.forEach(item => result.push(<Pagination.Item>{item}</Pagination.Item>))
 
       } else {
 
@@ -46,7 +94,7 @@ const paginationUtil = () => {
           }
 
           result.push(<Pagination.Ellipsis />)
-          result.push(<Pagination.Item>{arr.length}</Pagination.Item>)
+          result.push(<Pagination.Item>{pagesData.length}</Pagination.Item>)
 
       }
     }
@@ -59,7 +107,7 @@ const paginationUtil = () => {
     <Pagination className="justify-content-center">
       <Pagination.First />
       <Pagination.Prev />
-      {bar()}
+        {paginationMounting()}
       <Pagination.Next />
       <Pagination.Last />
     </Pagination>)
