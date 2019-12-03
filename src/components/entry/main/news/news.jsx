@@ -10,7 +10,7 @@ const News = () => {
 
     const [news, setNews] = useState([])
     useEffect(() => {
-        axios.get(`http://localhost:8081/assets/stub/news.json`)
+        axios.get(`http://localhost:8081/assets/stub/news/news1.json`)
             .then(response => setNews(response.data.news))
             .catch(error => console.log(error))
     }, [])

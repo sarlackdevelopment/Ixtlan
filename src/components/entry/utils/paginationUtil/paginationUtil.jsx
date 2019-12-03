@@ -4,7 +4,7 @@ import Pagination from 'react-bootstrap/Pagination'
 
 import axios from 'axios'
 
-const paginationUtil = () => {
+const paginationUtil = (liftCurrentPage) => {
 
   const [quantity, setQuantity] = useState(0)
   const [currentPage, setCurrentPage] = useState(1)
@@ -65,8 +65,11 @@ const paginationUtil = () => {
 
   const getPaginationItem = (itemData, active = false) => {
     return (active ?
-      <Pagination.Item active>{itemData}</Pagination.Item> :
-      <Pagination.Item onClick={() => setCurrentPage(itemData)}>{itemData}</Pagination.Item>
+      <Pagination.Item key={itemData} active>{itemData}</Pagination.Item> :
+      <Pagination.Item key={itemData} onClick={() => {
+        setCurrentPage(itemData)
+        liftCurrentPage.setCurrentPage(itemData)
+      }}>{itemData}</Pagination.Item>
     )
   }
 
@@ -75,13 +78,13 @@ const paginationUtil = () => {
     const result = []
 
     result.push(getPaginationItem(1, currentPage === 1))
-    result.push(<Pagination.Ellipsis />)
+    result.push(<Pagination.Ellipsis key={'firstEllipsis'} />)
           
     for (let i = currentPage - 2; i <= currentPage + 2; i++){
       result.push(getPaginationItem(i, i === currentPage))
     }
 
-    result.push(<Pagination.Ellipsis />)
+    result.push(<Pagination.Ellipsis key={'secondEllipsis'} />)
     result.push(getPaginationItem(countPages, countPages === currentPage))
 
     return result
@@ -112,7 +115,7 @@ const paginationUtil = () => {
 
           firstPages.forEach(item => result.push(getPaginationItem(item, item === currentPage)))
 
-          result.push(<Pagination.Ellipsis />)
+          result.push(<Pagination.Ellipsis key={'secondEllipsis'} />)
           result.push(getPaginationItem(pagesData.length, pagesData.length === currentPage))
 
         }
@@ -128,7 +131,7 @@ const paginationUtil = () => {
         } else {
 
           result.push(getPaginationItem(1, currentPage === 1))
-          result.push(<Pagination.Ellipsis />)
+          result.push(<Pagination.Ellipsis key={'firstEllipsis'} />)
 
           lastPages.forEach(item => result.push(getPaginationItem(item, item === currentPage)))
 
@@ -151,11 +154,25 @@ const paginationUtil = () => {
 
   return (
     <Pagination className="justify-content-center">
-      <Pagination.First onClick = {() => setCurrentPage(1)} />
-      <Pagination.Prev onClick = {() => setCurrentPage(currentPage == 1 ? 1 : currentPage - 1)} />
+      <Pagination.First onClick = {() => {
+        setCurrentPage(1)
+        liftCurrentPage.setCurrentPage(1)
+      }} />
+      <Pagination.Prev onClick = {() => {
+        let myCurrentPage = currentPage == 1 ? 1 : currentPage - 1
+        setCurrentPage(myCurrentPage)
+        liftCurrentPage.setCurrentPage(myCurrentPage)
+      }} />
         {paginationMounting()}
-      <Pagination.Next onClick = {() => setCurrentPage(currentPage == quantityOfAllPages ? quantityOfAllPages : currentPage + 1)} />
-      <Pagination.Last onClick = {() => setCurrentPage(quantityOfAllPages)} />
+      <Pagination.Next onClick = {() => {
+        let myCurrentPage = currentPage == quantityOfAllPages ? quantityOfAllPages : currentPage + 1
+        setCurrentPage(myCurrentPage)
+        liftCurrentPage.setCurrentPage(myCurrentPage)
+      }} />
+      <Pagination.Last onClick = {() => {
+        setCurrentPage(quantityOfAllPages)
+        liftCurrentPage.setCurrentPage(quantityOfAllPages)
+      }} />
     </Pagination>)
 }
 

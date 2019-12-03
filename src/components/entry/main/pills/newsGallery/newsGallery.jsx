@@ -10,14 +10,17 @@ import PaginationUtil from '../../../utils/paginationUtil'
 import _ from 'lodash'
 import axios from 'axios'
 
+const setCurrentPage = page => setCurrentPage(page)
+
 const NewsGallery = () => {
 
+    const [currentPage, setCurrentPage] = useState(1)
     const [news, setNews] = useState([])
     useEffect(() => {
-        axios.get(`http://localhost:8081/assets/stub/news.json`)
+        axios.get(`http://localhost:8081/assets/stub/news/news${currentPage}.json`)
             .then(response => setNews(prepareNewsList(response.data.news)))
             .catch(error => console.log(error))
-    }, [])
+    }, [currentPage])
 
     const dismensions = [[4, 4, 4], [6, 6], [8, 4], [4, 8]]
 
@@ -68,7 +71,7 @@ const NewsGallery = () => {
     return (
         <Container>
             {news.map((item, idx) => <Row key={idx}>{renderNews(item, idx == news.length - 1)}</Row>)}
-            <PaginationUtil />
+            <PaginationUtil setCurrentPage={setCurrentPage} />
         </Container>
     )
         
